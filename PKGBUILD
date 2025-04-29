@@ -1,8 +1,9 @@
 # Maintainer: Matthew Kavanagh <matt@matthewkavanagh.us>
 
 pkgname=mattkavs-git
-pkgver=0  # Will be overwritten by pkgver()
+pkgver=r15.f8c6750  # Will be overwritten by pkgver()
 pkgrel=1
+options=('!debug')
 pkgdesc="A personal collection of useful functions and utilities (latest git)"
 arch=('x86_64')
 url="https://github.com/mkavanagh-23/MattKavs"
