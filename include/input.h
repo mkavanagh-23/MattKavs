@@ -1,12 +1,13 @@
-#ifndef INPUT_H
-#define INPUT_H
+#ifndef MATTKAVS_INPUT_H
+#define MATTKAVS_INPUT_H
 
 #include <iostream>
 #include <string>
 #include <string_view>
 #include <type_traits>
 
-namespace Input {
+namespace MattKavs {
+namespace input {
     // Clear the input buffer up to '/n'
     void ignoreLine();
     // Check for remaining input after extraction
@@ -63,6 +64,8 @@ namespace Input {
         get(message, dest);
         return dest;
     }
-}
+} // namespace input
+
+} // namespace MattKavs
 
 #endif

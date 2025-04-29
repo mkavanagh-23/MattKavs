@@ -12,7 +12,7 @@ TEST_CASE("Input::ignoreLine() clears remaining input", "[input]") {
     // Test extracting the integer value
     int number;
     std::cin >> number;
-    Input::ignoreLine();
+    MattKavs::input::ignoreLine();
 
     // Verify extraction and stream state
     REQUIRE(number == 42);

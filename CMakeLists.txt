@@ -72,7 +72,7 @@ install(TARGETS MattKavs
 )
 
 # Install public headers
-install(DIRECTORY include/ DESTINATION include)
+install(DIRECTORY include/ DESTINATION include/MattKavs)
 
 # Export a CMake package config for easy find_package
 install(EXPORT MattKavsTargets

@@ -3,7 +3,8 @@
 #include <iostream>
 #include <limits>
 
-namespace Input {
+namespace MattKavs {
+namespace input {
     // Clear the input buffer up to and including '\n'
     void ignoreLine() { std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); }
 
@@ -18,4 +19,5 @@ namespace Input {
         std::cin.clear();   // Reset the error state
         ignoreLine();       // And clear the buffer
     }
-}
+} // namespace input
+} // namespace MattKavs
