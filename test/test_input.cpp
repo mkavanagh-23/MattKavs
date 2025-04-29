@@ -4,7 +4,7 @@
 #include <streambuf>
 #include <string>
 
-TEST_CASE("Input::ignoreLine() clears remaining input", "[input]") {
+TEST_CASE("ignoreLine() clears remaining input", "[input]") {
     // Load sample input into the std::cin stream
     std::istringstream input("42 this is extraneous data\n");
     std::streambuf* orig = std::cin.rdbuf(input.rdbuf());
@@ -20,4 +20,29 @@ TEST_CASE("Input::ignoreLine() clears remaining input", "[input]") {
 
     // Restore cin to the original input stream
     std::cin.rdbuf(orig);
+}
+
+TEST_CASE("hasUnextractedInput() checks for remaining input after extraction", "[input]") {
+  // Load the sample input streams
+  std::istringstream inputFalse("This test will return false\n");
+  std::istringstream inputTrue("42 This test will return true\n");
+
+  // Store a ptr to original cin and load false case
+  std::streambuf* orig = std::cin.rdbuf(inputFalse.rdbuf());
+
+  // Test False extraction
+  std::string text;
+  std::getline(std::cin, text);
+  // Verify FALSE extraction
+  REQUIRE(!MattKavs::input::hasUnextractedInput());
+
+  // Load true case and test extraction
+  std::cin.rdbuf(inputTrue.rdbuf());
+  int number;
+  std::cin >> number;
+  // Verify TRUE extraction
+  REQUIRE(MattKavs::input::hasUnextractedInput());
+
+  // Restore cin to the original input stream
+  std::cin.rdbuf(orig);
 }
