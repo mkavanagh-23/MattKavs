@@ -1,0 +1,21 @@
+#include "input.h"
+
+#include <iostream>
+#include <limits>
+
+namespace Input {
+    // Clear the input buffer up to and including '\n'
+    void ignoreLine() { std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); }
+
+    // Check for remaining input after extraction
+    bool hasUnextractedInput() { return !std::cin.eof() && std::cin.peek() != '\n'; }
+
+    // Check for failed extraction
+    bool failure() { return !std::cin; }
+    
+    // Reset and clear input stream
+    void reset() {
+        std::cin.clear();   // Reset the error state
+        ignoreLine();       // And clear the buffer
+    }
+}
