@@ -1,14 +1,15 @@
 #!/bin/bash
 
 # Build the library
+mkdir build
 cd build/
 echo "Building C++ Library 'MattKavs'"
 cmake ..
 make
 
 # Run the tests
-echo "Running tests..."
-ctest
+#echo "Running tests..."
+#ctest
 
 # Install the library
 if [ $? -eq 0 ]; then

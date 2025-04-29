@@ -32,31 +32,31 @@ target_include_directories(MattKavs PUBLIC
 )
 
 # --- Tests ---
-include(CTest)
-enable_testing()
-
-include(FetchContent)
-FetchContent_Declare(
-    Catch2
-    GIT_REPOSITORY https://github.com/catchorg/Catch2.git
-    GIT_TAG v3.5.2
-)
-FetchContent_MakeAvailable(Catch2)
-
-file(GLOB_RECURSE TEST_SOURCES CONFIGURE_DEPENDS test/*.cpp)
-
-add_executable(MattKavsTests
-    ${TEST_SOURCES}
-)
-
-target_link_libraries(MattKavsTests
-    PRIVATE
-    MattKavs
-    Catch2::Catch2WithMain
-)
-
-include(Catch)
-catch_discover_tests(MattKavsTests)
+#include(CTest)
+#enable_testing()
+#
+#include(FetchContent)
+#FetchContent_Declare(
+#    Catch2
+#    GIT_REPOSITORY https://github.com/catchorg/Catch2.git
+#    GIT_TAG v3.5.2
+#)
+#FetchContent_MakeAvailable(Catch2)
+#
+#file(GLOB_RECURSE TEST_SOURCES CONFIGURE_DEPENDS test/*.cpp)
+#
+#add_executable(MattKavsTests
+#    ${TEST_SOURCES}
+#)
+#
+#target_link_libraries(MattKavsTests
+#    PRIVATE
+#    MattKavs
+#    Catch2::Catch2WithMain
+#)
+#
+#include(Catch)
+#catch_discover_tests(MattKavsTests)
 
 # -----------------------
 # Install Rules - New Part

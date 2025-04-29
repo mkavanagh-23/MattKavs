@@ -4,7 +4,6 @@
 #include <iostream>
 #include <string>
 #include <string_view>
-#include <limits>
 #include <type_traits>
 
 namespace Input {
@@ -34,6 +33,8 @@ namespace Input {
             std::cin >> dest;
             // Check for failure
             if (failure()) {
+                if(std::cin.eof())
+                    std::exit(1);
                 reset();
                 return false;
             }
