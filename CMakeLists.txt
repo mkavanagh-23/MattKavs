@@ -35,13 +35,21 @@ target_include_directories(MattKavs PUBLIC
 include(CTest)
 enable_testing()
 
-include(FetchContent)
-FetchContent_Declare(
-    Catch2
-    GIT_REPOSITORY https://github.com/catchorg/Catch2.git
-    GIT_TAG v3.5.2
-)
-FetchContent_MakeAvailable(Catch2)
+# Try to find system-installed Catch2 first
+find_package(Catch2 3 REQUIRED CONFIG QUIET)
+
+if(NOT Catch2_FOUND)
+    message(STATUS "Catch2 not found, using FetchContent to download it")
+    include(FetchContent)
+    FetchContent_Declare(
+        Catch2
+        GIT_REPOSITORY https://github.com/catchorg/Catch2.git
+        GIT_TAG v3.5.2
+    )
+    FetchContent_MakeAvailable(Catch2)
+else()
+    message(STATUS "Using system-installed Catch2")
+endif()
 
 file(GLOB_RECURSE TEST_SOURCES CONFIGURE_DEPENDS test/*.cpp)
 
