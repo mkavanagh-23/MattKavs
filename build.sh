@@ -10,8 +10,8 @@ cmake -DCMAKE_INSTALL_PREFIX=/usr ..
 make
 
 # Run the tests
-#echo "Running tests..."
-#ctest
+echo "Running tests..."
+ctest
 
 # Install the library
 if [ $? -eq 0 ]; then
