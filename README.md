@@ -14,6 +14,6 @@ sudo make install
 
 ## Linking In Other Projects
 ```
-find_package(YourLibraryName REQUIRED)
-target_link_libraries(MyApp PRIVATE YourLibraryName::YourLibraryName)
+find_package(MattKavs REQUIRED)
+target_link_libraries(MyApp PRIVATE MattKavs::MattKavs)
 ```
