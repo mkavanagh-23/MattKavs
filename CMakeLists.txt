@@ -59,20 +59,25 @@ include(Catch)
 catch_discover_tests(MattKavsTests)
 
 # -----------------------
-# Install Rules - New Part
+# Install Rules
 # -----------------------
 
 # Install the library
+
+# Set Linux install paths for the current distro
+include(GNUInstallDirs)
+
+# Install the targets
 install(TARGETS MattKavs
     EXPORT MattKavsTargets
-    LIBRARY DESTINATION lib
-    ARCHIVE DESTINATION lib
-    RUNTIME DESTINATION bin
-    INCLUDES DESTINATION include
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )
 
 # Install public headers
-install(DIRECTORY include/ DESTINATION include/MattKavs)
+install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/MattKavs)
 
 # Export a CMake package config for easy find_package
 install(EXPORT MattKavsTargets
