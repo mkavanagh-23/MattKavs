@@ -7,15 +7,11 @@
 // Need to define constructor for creating RGB and RGBA objects
 // Need to define equality/isEqual() function to allow for object comparison
 TEST_CASE("colors::hexToRGB handles leading '#'", "[colors]") {
-  REQUIRE(MattKavs::colors::hexToRGB("#800080") == MattKavs::colors::RGB{128, 0, 128});
+  REQUIRE(MattKavs::colors::hexToRGB("#800080") == MattKavs::colors::RGB{ 128, 0, 128 });
 }
 
 TEST_CASE("colors::hexToRGB handles no leading '#'", "[colors]") {
-  REQUIRE(MattKavs::colors::hexToRGB("800080") == MattKavs::colors::RGB{128, 0, 128});
-}
-
-TEST_CASE("colors::hexToRGB converts to uppercase values", "[colors]") {
-
+  REQUIRE(MattKavs::colors::hexToRGB("800080") == MattKavs::colors::RGB{ 128, 0, 128 });
 }
 
 TEST_CASE("colors::hexToRGB converts primary colors", "[colors]") {
@@ -34,7 +30,7 @@ TEST_CASE("colors::hexToRGB throws a runtime on invalid input size", "[colors]")
 
 }
 
-TEST_CASE("colors::hexToRGB throws a runtime error on non-hex values", "[colors]") {
+TEST_CASE("colors::hexToRGB throws a runtime error on invalid hex digits", "[colors]") {
 
 }
 
