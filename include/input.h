@@ -14,7 +14,7 @@ namespace input {
   // Check for remaining input after extraction
   bool hasUnextractedData();
   // Check for failed extraction
-  bool failure();
+  bool failure() noexcept;
   // Reset and clear input stream
   void reset();
 
