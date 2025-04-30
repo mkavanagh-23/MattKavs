@@ -4,10 +4,33 @@
 #include <streambuf>
 #include <string>
 
+namespace TestHelpers {
+// Define a class for iostream redirection
+struct StreamRedirect {
+  std::streambuf* origCin;
+  std::streambuf* origCout;
+  std::istringstream testIn;
+  std::ostringstream testOut;
+
+  StreamRedirect(const std::string& inputData)
+  : origCin(std::cin.rdbuf()), origCout(std::cout.rdbuf()), testIn(inputData) {
+    std::cin.rdbuf(testIn.rdbuf());
+    std::cout.rdbuf(testOut.rdbuf());
+  }
+
+  ~StreamRedirect() {
+      std::cin.rdbuf(origCin);
+      std::cout.rdbuf(origCout);
+  }
+
+  std::string output() const { return testOut.str(); }
+};
+} // namespace TestHelpers
+
 TEST_CASE("input::ignoreLine clears remaining input", "[input]") {
-  // Load sample input into the std::cin stream
-  std::istringstream input("42 this is extraneous data\n");
-  std::streambuf* orig = std::cin.rdbuf(input.rdbuf());
+
+  // Create a redirected test stream
+  TestHelpers::StreamRedirect redirect("42 this is extraneous data\n");
 
   // Test extracting the integer value
   int number;
@@ -17,31 +40,41 @@ TEST_CASE("input::ignoreLine clears remaining input", "[input]") {
   // Verify extraction and stream state
   REQUIRE(number == 42);
   REQUIRE(std::cin.peek() == std::char_traits<char>::eof());
+}
+
+// TODO: Modify the rest of the tests to utilize our StreamRedirect object
+
+TEST_CASE("input::hasUnextractedData returns true for remaining input after extraction", "[input]") {
+  // Load the sample input streams
+  std::istringstream input("42 this test will return true\n");
+
+  // Store a ptr to original cin and load false case
+  std::streambuf* orig = std::cin.rdbuf(input.rdbuf());
+
+  // Load true case and test extraction
+  int number;
+  std::cin >> number;
+  // Verify TRUE extraction
+  REQUIRE(number == 42);
+  REQUIRE(MattKavs::input::hasUnextractedData());
 
   // Restore cin to the original input stream
   std::cin.rdbuf(orig);
 }
 
-TEST_CASE("input::hasUnextractedData returns true for remaining input after extraction", "[input]") {
+TEST_CASE("input::hasUnextractedData returns false if all data was extracted", "[input]") {
   // Load the sample input streams
-  std::istringstream inputFalse("This test will return false\n");
-  std::istringstream inputTrue("42 this test will return true\n");
+  std::istringstream input("This test will return false\n");
 
   // Store a ptr to original cin and load false case
-  std::streambuf* orig = std::cin.rdbuf(inputFalse.rdbuf());
+  std::streambuf* orig = std::cin.rdbuf(input.rdbuf());
 
   // Test False extraction
   std::string text;
   std::getline(std::cin, text);
   // Verify FALSE extraction
+  REQUIRE(text == "This test will return false");
   REQUIRE_FALSE(MattKavs::input::hasUnextractedData());
-
-  // Load true case and test extraction
-  std::cin.rdbuf(inputTrue.rdbuf());
-  int number;
-  std::cin >> number;
-  // Verify TRUE extraction
-  REQUIRE(MattKavs::input::hasUnextractedData());
 
   // Restore cin to the original input stream
   std::cin.rdbuf(orig);
