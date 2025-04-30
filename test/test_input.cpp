@@ -5,21 +5,21 @@
 #include <string>
 
 TEST_CASE("input::ignoreLine clears remaining input", "[input]") {
-    // Load sample input into the std::cin stream
-    std::istringstream input("42 this is extraneous data\n");
-    std::streambuf* orig = std::cin.rdbuf(input.rdbuf());
+  // Load sample input into the std::cin stream
+  std::istringstream input("42 this is extraneous data\n");
+  std::streambuf* orig = std::cin.rdbuf(input.rdbuf());
 
-    // Test extracting the integer value
-    int number;
-    std::cin >> number;
-    MattKavs::input::ignoreLine();
+  // Test extracting the integer value
+  int number;
+  std::cin >> number;
+  MattKavs::input::ignoreLine();
 
-    // Verify extraction and stream state
-    REQUIRE(number == 42);
-    REQUIRE(std::cin.peek() == std::char_traits<char>::eof());
+  // Verify extraction and stream state
+  REQUIRE(number == 42);
+  REQUIRE(std::cin.peek() == std::char_traits<char>::eof());
 
-    // Restore cin to the original input stream
-    std::cin.rdbuf(orig);
+  // Restore cin to the original input stream
+  std::cin.rdbuf(orig);
 }
 
 TEST_CASE("input::hasUnextractedData returns true for remaining input after extraction", "[input]") {
@@ -124,31 +124,31 @@ TEST_CASE("input::extract returns false on empty string input", "[input]") {
 }
 
 TEST_CASE("input::get<T> reads input with prompt", "[input]") {
-    std::istringstream input("123\n");
-    std::ostringstream output;
-    std::streambuf* origCin = std::cin.rdbuf(input.rdbuf());
-    std::streambuf* origCout = std::cout.rdbuf(output.rdbuf());
+  std::istringstream input("123\n");
+  std::ostringstream output;
+  std::streambuf* origCin = std::cin.rdbuf(input.rdbuf());
+  std::streambuf* origCout = std::cout.rdbuf(output.rdbuf());
 
-    int number = MattKavs::input::get<int>("Enter number: ");
-    REQUIRE(number == 123);
-    REQUIRE(output.str() == "Enter number: ");
+  int number = MattKavs::input::get<int>("Enter number: ");
+  REQUIRE(number == 123);
+  REQUIRE(output.str() == "Enter number: ");
 
-    std::cin.rdbuf(origCin);
-    std::cout.rdbuf(origCout);
+  std::cin.rdbuf(origCin);
+  std::cout.rdbuf(origCout);
 }
 
 TEST_CASE("input::get<T> retries on failure", "[input]") {
-    std::istringstream input("abc\n123\n");
-    std::ostringstream output;
-    std::streambuf* origCin = std::cin.rdbuf(input.rdbuf());
-    std::streambuf* origCout = std::cout.rdbuf(output.rdbuf());
+  std::istringstream input("abc\n123\n");
+  std::ostringstream output;
+  std::streambuf* origCin = std::cin.rdbuf(input.rdbuf());
+  std::streambuf* origCout = std::cout.rdbuf(output.rdbuf());
 
-    int number = MattKavs::input::get<int>("Enter valid int: ");
-    REQUIRE(number == 123);
+  int number = MattKavs::input::get<int>("Enter valid int: ");
+  REQUIRE(number == 123);
 
-    // Output should prompt twice
-    REQUIRE(output.str() == "Enter valid int: Enter valid int: ");
+  // Output should prompt twice
+  REQUIRE(output.str() == "Enter valid int: Enter valid int: ");
 
-    std::cin.rdbuf(origCin);
-    std::cout.rdbuf(origCout);
+  std::cin.rdbuf(origCin);
+  std::cout.rdbuf(origCout);
 }
