@@ -4,7 +4,7 @@
 #include <streambuf>
 #include <string>
 
-TEST_CASE("input::ignoreLine() clears remaining input", "[input]") {
+TEST_CASE("input::ignoreLine clears remaining input", "[input]") {
     // Load sample input into the std::cin stream
     std::istringstream input("42 this is extraneous data\n");
     std::streambuf* orig = std::cin.rdbuf(input.rdbuf());
@@ -22,10 +22,10 @@ TEST_CASE("input::ignoreLine() clears remaining input", "[input]") {
     std::cin.rdbuf(orig);
 }
 
-TEST_CASE("input::hasUnextractedData() checks for remaining input after extraction", "[input]") {
+TEST_CASE("input::hasUnextractedData returns true for remaining input after extraction", "[input]") {
   // Load the sample input streams
   std::istringstream inputFalse("This test will return false\n");
-  std::istringstream inputTrue("42 This test will return true\n");
+  std::istringstream inputTrue("42 this test will return true\n");
 
   // Store a ptr to original cin and load false case
   std::streambuf* orig = std::cin.rdbuf(inputFalse.rdbuf());
@@ -34,7 +34,7 @@ TEST_CASE("input::hasUnextractedData() checks for remaining input after extracti
   std::string text;
   std::getline(std::cin, text);
   // Verify FALSE extraction
-  REQUIRE(!MattKavs::input::hasUnextractedData());
+  REQUIRE_FALSE(MattKavs::input::hasUnextractedData());
 
   // Load true case and test extraction
   std::cin.rdbuf(inputTrue.rdbuf());
@@ -47,7 +47,7 @@ TEST_CASE("input::hasUnextractedData() checks for remaining input after extracti
   std::cin.rdbuf(orig);
 }
 
-TEST_CASE("input::failure() checks for failed extraction of data", "[input]") {
+TEST_CASE("input::failure returns true for invalid input", "[input]") {
   // Load the sample input stream
   std::istringstream input("Thisisnotanumber\n");
   std::streambuf* orig = std::cin.rdbuf(input.rdbuf());
@@ -56,6 +56,22 @@ TEST_CASE("input::failure() checks for failed extraction of data", "[input]") {
   std::cin >> number;
 
   REQUIRE(MattKavs::input::failure());
+
+  std::cin.rdbuf(orig);
+}
+
+TEST_CASE("input::reset clears cin error state and ignores to newline char", "[input]") {
+  std::istringstream input("invalid\n123\n");
+  std::streambuf* orig = std::cin.rdbuf(input.rdbuf());
+
+  int number;
+  std::cin >> number;   // This should fail
+  REQUIRE(MattKavs::input::failure());
+
+  MattKavs::input::reset(); // reset clears error state and ignores chars up to '\n'
+  std::cin >> number;   // This should pass and extract the second line
+  REQUIRE_FALSE(MattKavs::input::failure());
+  REQUIRE(number == 123);
 
   std::cin.rdbuf(orig);
 }
