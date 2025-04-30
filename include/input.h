@@ -5,6 +5,7 @@
 #include <string>
 #include <string_view>
 #include <type_traits>
+#include <stdexcept>
 
 namespace MattKavs {
 namespace input {
@@ -18,6 +19,7 @@ namespace input {
   void reset();
 
   // Internal helper: extract input correctly depending on type
+  // Throws a std::runtime_error if it tries to extract data past EOF 
   template <typename T>
   bool extract(T& dest) {
     // Check for string type argument
@@ -35,7 +37,7 @@ namespace input {
       // Check for failure
       if (failure()) {
         if(std::cin.eof())
-          std::exit(1);
+          throw std::runtime_error("Unexpected EOF encountered while extracting input.");
         reset();
         return false;
       }

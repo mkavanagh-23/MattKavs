@@ -105,7 +105,7 @@ TEST_CASE("input::extract returns false on empty string input", "[input]") {
 }
 
 TEST_CASE("input::get<T> reads input with prompt", "[input]") {
-  // Create a redirected test stream
+  // Create redirected test streams
   TestHelpers::StreamRedirect redirect("123\n"); // Test an empty input stream
 
   int number = MattKavs::input::get<int>("Enter number: ");
