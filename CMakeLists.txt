@@ -36,10 +36,10 @@ include(CTest)
 enable_testing()
 
 # Try to find system-installed Catch2 first
-find_package(Catch2 3 REQUIRED CONFIG QUIET)
+find_package(Catch2 3 CONFIG QUIET)
 
 if(NOT Catch2_FOUND)
-    message(STATUS "Catch2 not found, using FetchContent to download it")
+    message(STATUS "Catch2 (v3.0.0+) not found, using FetchContent to download it")
     include(FetchContent)
     FetchContent_Declare(
         Catch2
@@ -48,7 +48,7 @@ if(NOT Catch2_FOUND)
     )
     FetchContent_MakeAvailable(Catch2)
 else()
-    message(STATUS "Using system-installed Catch2")
+	message(STATUS "Using system-installed Catch2i (v${Catch2_VERSION})")
 endif()
 
 file(GLOB_RECURSE TEST_SOURCES CONFIGURE_DEPENDS test/*.cpp)
