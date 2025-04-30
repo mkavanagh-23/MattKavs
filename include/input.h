@@ -11,7 +11,7 @@ namespace input {
     // Clear the input buffer up to '/n'
     void ignoreLine();
     // Check for remaining input after extraction
-    bool hasUnextractedInput();
+    bool hasUnextractedData();
     // Check for failed extraction
     bool failure();
     // Reset and clear input stream

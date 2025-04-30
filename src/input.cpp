@@ -9,7 +9,7 @@ namespace input {
     void ignoreLine() { std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); }
 
     // Check for remaining input after extraction
-    bool hasUnextractedInput() {
+    bool hasUnextractedData() {
       // Peek the next char
       int next = std::cin.peek();
       return next != EOF && next != '\n';
