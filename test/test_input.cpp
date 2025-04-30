@@ -1,31 +1,7 @@
+#include "test_helpers.h"
 #include "input.h"
 #include <catch2/catch_test_macros.hpp>
-#include <sstream>
-#include <streambuf>
 #include <string>
-
-namespace TestHelpers {
-// Define an object for iostream redirection
-struct StreamRedirect {
-  std::streambuf* origCin;
-  std::streambuf* origCout;
-  std::istringstream testIn;
-  std::ostringstream testOut;
-
-  StreamRedirect(const std::string& inputData)
-  : origCin(std::cin.rdbuf()), origCout(std::cout.rdbuf()), testIn(inputData) {
-    std::cin.rdbuf(testIn.rdbuf());
-    std::cout.rdbuf(testOut.rdbuf());
-  }
-
-  ~StreamRedirect() {
-      std::cin.rdbuf(origCin);
-      std::cout.rdbuf(origCout);
-  }
-
-  std::string output() const { return testOut.str(); }
-};
-} // namespace TestHelpers
 
 TEST_CASE("input::ignoreLine clears remaining input", "[input]") {
   // Create a redirected test stream
