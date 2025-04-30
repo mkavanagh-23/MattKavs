@@ -122,3 +122,33 @@ TEST_CASE("input::extract returns false on empty string input", "[input]") {
 
   std::cin.rdbuf(orig);
 }
+
+TEST_CASE("input::get<T> reads input with prompt", "[input]") {
+    std::istringstream input("123\n");
+    std::ostringstream output;
+    std::streambuf* origCin = std::cin.rdbuf(input.rdbuf());
+    std::streambuf* origCout = std::cout.rdbuf(output.rdbuf());
+
+    int number = MattKavs::input::get<int>("Enter number: ");
+    REQUIRE(number == 123);
+    REQUIRE(output.str() == "Enter number: ");
+
+    std::cin.rdbuf(origCin);
+    std::cout.rdbuf(origCout);
+}
+
+TEST_CASE("input::get<T> retries on failure", "[input]") {
+    std::istringstream input("abc\n123\n");
+    std::ostringstream output;
+    std::streambuf* origCin = std::cin.rdbuf(input.rdbuf());
+    std::streambuf* origCout = std::cout.rdbuf(output.rdbuf());
+
+    int number = MattKavs::input::get<int>("Enter valid int: ");
+    REQUIRE(number == 123);
+
+    // Output should prompt twice
+    REQUIRE(output.str() == "Enter valid int: Enter valid int: ");
+
+    std::cin.rdbuf(origCin);
+    std::cout.rdbuf(origCout);
+}
