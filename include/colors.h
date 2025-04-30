@@ -8,6 +8,8 @@
 namespace MattKavs {
 namespace colors {
 
+// TODO: Still need to implement ostream&<< overload for color objects
+
 struct RGB {
   std::uint8_t r { 255 };
   std::uint8_t g { 255 };
@@ -41,7 +43,8 @@ struct RGB {
   ~RGB() = default;
 
   // Overide Operator<< to print the object
-  friend std::ostream& operator<<(std::ostream& out, const RGB& color);
+  //friend std::ostream& operator<<(std::ostream& out, const RGB& color);
+  
   // Override comparison operators
   // Equality operator
   friend bool operator==(const RGB& lhs, const RGB& rhs) {
