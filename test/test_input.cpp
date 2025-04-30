@@ -75,3 +75,50 @@ TEST_CASE("input::reset clears cin error state and ignores to newline char", "[i
 
   std::cin.rdbuf(orig);
 }
+
+TEST_CASE("input::extract successfully reads int values", "[input]") {
+  std::istringstream input("42\n");
+  std::streambuf* orig = std::cin.rdbuf(input.rdbuf());
+
+  int number;
+  bool success = MattKavs::input::extract(number);
+  REQUIRE(success);
+  REQUIRE(number == 42);
+
+  std::cin.rdbuf(orig);
+}
+
+TEST_CASE("input::extract successfully reads string values with spaces", "[input]") {
+  std::istringstream input("This is a string value with spaces\n");
+  std::streambuf* orig = std::cin.rdbuf(input.rdbuf());
+
+  std::string message;
+  bool success = MattKavs::input::extract(message);
+  REQUIRE(success);
+  REQUIRE(message == "This is a string value with spaces");
+
+  std::cin.rdbuf(orig);
+}
+
+TEST_CASE("input::extract returns false on invalid int input", "[input]") {
+  std::istringstream input("Thisisnotanint\n");
+  std::streambuf* orig = std::cin.rdbuf(input.rdbuf());
+
+  int number;
+  bool success = MattKavs::input::extract(number);
+  REQUIRE_FALSE(success);
+
+  std::cin.rdbuf(orig);
+}
+
+TEST_CASE("input::extract returns false on empty string input", "[input]") {
+  std::istringstream input(""); // Test an empty string
+  std::streambuf* orig = std::cin.rdbuf(input.rdbuf());
+
+  std::string message = "placeholder";
+  bool success = MattKavs::input::extract(message);
+  REQUIRE_FALSE(success);
+  REQUIRE(message.empty());
+
+  std::cin.rdbuf(orig);
+}
