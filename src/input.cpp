@@ -16,7 +16,7 @@ namespace input {
   }
 
   // Check for failed extraction
-  bool failure() { return !std::cin; }
+  bool failure() noexcept { return !std::cin; }
   
   // Reset and clear input stream
   void reset() {
