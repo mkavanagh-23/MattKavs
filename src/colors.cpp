@@ -1,6 +1,7 @@
 #include "colors.h"
 #include "dataUtils.h"
 #include <cstddef>
+#include <sstream>
 #include <stdexcept>
 
 namespace MattKavs {
@@ -72,5 +73,12 @@ RGBA hexToRGBA(std::string_view hex) {
   return RGBA{ baseColor, static_cast<std::uint8_t>(std::stoi(alphaChannel, nullptr, 16)) };
 }
 
+// Convert an RGB/A object to a hex string
+std::string RGBtoHex(const RGB& color) {
+  return "#" + dataUtils::toHex(color.r) + dataUtils::toHex(color.g) + dataUtils::toHex(color.b);
+}
+std::string RGBAtoHex(const RGBA& color) {
+  return "#" + dataUtils::toHex(color.r) + dataUtils::toHex(color.g) + dataUtils::toHex(color.b) + dataUtils::toHex(color.a);
+}
 }   // namespace colors
 }   // namespace MattKavs
