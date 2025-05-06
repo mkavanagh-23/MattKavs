@@ -69,15 +69,15 @@ TEST_CASE("colors::hexToRGBA throws on invalid input size", "[colors]") {
   REQUIRE_THROWS(MattKavs::colors::hexToRGBA("FFF0DFFFA"));
 }
 
-//// Test conversion from RGB objects to hex strings
-//TEST_CASE("colors::RGBtoHex creates a 7-digit string (contains leading '#'", "[colors]") {
-//
-//}
-//
-//TEST_CASE("colors::RGBAtoHex creates a 9-digit string (contains leading '#'", "[colors]") {
-//
-//}
-//
+// Test conversion from RGB objects to hex strings
+TEST_CASE("colors::RGBtoHex creates valid hex value with leading #", "[colors]") {
+  REQUIRE(MattKavs::colors::RGBtoHex(MattKavs::colors::RGB{ 255, 255, 0 }) == "#FFFF00");
+}
+
+TEST_CASE("colors::RGBAtoHex creates valid hex value with leading #", "[colors]") {
+  REQUIRE(MattKavs::colors::RGBAtoHex(MattKavs::colors::RGBA{ 255, 0, 255, 0 }) == "#FF00FF00");
+}
+
 //// Test operator<< overload for printing RGB and RGBA objects
 //TEST_CASE("RGB objects are successfully converted to ostream", "[colors]") {
 //

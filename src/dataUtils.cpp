@@ -1,5 +1,8 @@
 #include "dataUtils.h"
 
+#include <cstdint>
+#include <sstream>
+#include <iomanip>
 #include <string>
 #include <stdexcept>
 
@@ -25,5 +28,12 @@ namespace dataUtils {
         throw std::runtime_error("Invalid character in hex color string");
     }
   }
+  
+  std::string toHex(std::uint8_t value) {
+    std::stringstream ss;
+    ss << std::uppercase << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(value);
+    return ss.str();
+  }
+
 } // namespace dataUtils
 } // namespace MattKavs
