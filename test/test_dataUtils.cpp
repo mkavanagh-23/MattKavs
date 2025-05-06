@@ -1,5 +1,6 @@
 #include "dataUtils.h"
 #include <catch2/catch_test_macros.hpp>
+#include <array>
 
 TEST_CASE("dataUtils::strToUpper converts lowercase chars in a string to uppercase", "[dataUtils]") {
   std::string test1{ "thiswillbeupper" };
