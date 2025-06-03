@@ -6,6 +6,9 @@
 #include <string>
 #include <stdexcept>
 
+// TODO:
+// Add JSON formatting utils
+
 namespace MattKavs {
 namespace dataUtils {
   void strToUpper(std::string& str) {
