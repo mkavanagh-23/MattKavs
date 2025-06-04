@@ -6,10 +6,6 @@
 #include <string>
 #include <stdexcept>
 
-// TODO:
-// Add JSON formatting utils
-// I need to test updates module
-
 namespace MattKavs {
 namespace dataUtils {
   void strToUpper(std::string& str) {
